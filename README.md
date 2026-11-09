@@ -1,11 +1,13 @@
 # 🌌 Sai Gajmal | Interactive Developer Portfolio
 
-[![Portfolio Status](https://img.shields.io/badge/Status-Active-emerald?style=for-the-badge)](https://sai-0101.github.io)
+[![Live Site](https://img.shields.io/badge/Netlify-sai--0101.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://sai-0101.netlify.app)
 [![Tech Stack](https://img.shields.io/badge/Stack-Three.js_|_TailwindCSS_|_JS-blue?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![GitHub](https://img.shields.io/badge/GitHub-Sai--0101-181717?style=for-the-badge&logo=github)](https://github.com/Sai-0101)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
 
 > A dark, cinematic personal portfolio combining an interactive terminal boot sequence, celestial blood-moon aesthetics, 3D interactive roundtables, and gamified navigation nodes to showcase competitive hackathon builds, systems engineering projects, and software design.
+
+🔗 **Live Deployment:** [sai-0101.netlify.app](https://sai-0101.netlify.app)
 
 ---
 
@@ -48,4 +50,26 @@ Dedicated interactive timeline and cards highlighting competitive builds and nat
 | **Frontend Framework & Logic** | HTML5, JavaScript (ES6+), Modern DOM API |
 | **Styling & Effects** | Tailwind CSS, Custom Canvas Shaders, CSS Glassmorphism |
 | **3D Rendering & Animations** | Three.js / WebGL, CSS Keyframe Interpolation |
-| **Deployment & CI/CD** | GitHub Pages / Netlify|
+| **Hosting & Deployment** | Netlify (Continuous Deployment via Git) |
+
+---
+
+## 📁 Repository Structure
+
+```text
+├── assets/
+│   ├── images/              # Avatars, blood-moon masks, gem icons
+│   ├── media/               # Ambient looping background video & SFX
+│   └── icons/               # SVG tech delegate emblems
+├── css/
+│   ├── tailwind.css         # Tailwind build output
+│   └── animations.css       # Orbit transforms, glow shaders, terminal scanlines
+├── js/
+│   ├── main.js              # Application lifecycle & state manager
+│   ├── terminal.js          # Bootloader typing & diagnostic logic
+│   ├── orbit.js             # Orbiting gem physics & pointer calculations
+│   └── roundtable.js        # 3D interactive delegate roundtable scene
+├── index.html               # Main viewport & semantic layout
+├── netlify.toml             # Build configurations & header redirect rules
+├── LICENSE
+└── README.md
