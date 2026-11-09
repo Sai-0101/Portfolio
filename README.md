@@ -30,16 +30,10 @@
 
 ### 🏆 Hackathon & Competitive Track Records
 Dedicated interactive timeline and cards highlighting competitive builds and national hackathon selections:
-- **Inkloom AI Challenge:** *BrandPulse AI* (Enterprise Brand Governance & Accessibility Engine)
 - **Bit N Build 2026:** Maharashtra State Hackathon Finalist Prototype
-- **CodeNexus India 2026:** National Engineering Hackathon Prototype
-- **AgentVerse 2026:** Autonomous AI Agents Hackathon by HackIndia
 - **Hackatopia 2026:** Multi-disciplinary Project Prototype
 
-### 🚀 Core Engineering Projects Showcase
-- **BrandPulse AI:** Enterprise content moderation and brand rule compliance pipeline.
-- **Vitometer:** Interactive digital logic verification web platform implementing active-low Boolean circuit processing.
-- **2D PvP Silhouette Fighter:** Physics-driven, competitive 1v1 combat prototype built with precise hurtbox/hitbox registration and custom pixel-art animation frames.
+
 
 ---
 
