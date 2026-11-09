@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sai Gajmal|Student</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Video Background & Intro Stage -->
+  <div id="video-stage">
+    <!-- Ambient looping ocean & moon (runs continuously underneath) -->
+    <video id="bg-loop" src="Looping.mp4" autoplay muted loop playsinline></video>
+
+    <!-- Cinematic Intro Overlay -->
+    <div id="intro-overlay">
+      <video id="intro-video" src="Intro.mp4" autoplay muted playsinline></video>
+      <button id="skip-btn" type="button" aria-label="Skip Cinematic Intro">Skip Intro ➔</button>
+    </div>
+  </div>
+
+  <!-- Interactive Hero Scene (Revealed when intro finishes or is skipped) -->
+  <main id="portfolio-content" class="hidden">
+    <div class="character-orbit-stage">
+
+        <!-- Central Avatar GIF touching the bottom edge of screen -->
+        <!-- Central Avatar PNG (Slides up from the bottom) -->
+              <div class="avatar-wrapper">
+                <img src="Main.png" alt="Avatar Character" id="hero-avatar" />
+              </div>
+
+      <!-- Gem 1: Social Media -->
+      <a href="Socials.html" target="_blank" rel="noopener noreferrer" class="gem-link gem-1">
+        <div class="gem-content">
+          <img src="Gem1.png" alt="Social Media Gem" class="gem-image" />
+          <span class="gem-tooltip">SOCIALS</span>
+        </div>
+      </a>
+
+      <!-- Gem 2: Projects / Work -->
+      <a href="https://github.com/Sai-0101" target="_blank" rel="noopener noreferrer" class="gem-link gem-2">
+        <div class="gem-content">
+          <img src="Gem2.png" alt="Projects Gem" class="gem-image" />
+          <span class="gem-tooltip">GITHUB</span>
+        </div>
+      </a>
+
+      <!-- Gem 3: About / Contact -->
+      <a href="About.html" target="_blank" rel="noopener noreferrer" class="gem-link gem-3">
+        <div class="gem-content">
+          <img src="Gem3.png" alt="About Gem" class="gem-image" />
+          <span class="gem-tooltip">ABOUT</span>
+        </div>
+      </a>
+
+
+
+    </div>
+  </main>
+
+  <script src="Script.js"></script>
+</body>
+</html>

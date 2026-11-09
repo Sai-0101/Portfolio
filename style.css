@@ -1,0 +1,302 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #030308;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* =========================================================
+   1. Video Layer & Crossfade Transition
+   ========================================================= */
+#video-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+#bg-loop,
+#intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: #000;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.2s ease-in-out, visibility 1.2s ease-in-out;
+}
+
+#intro-overlay.dismissed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Skip Intro Pill Button */
+#skip-btn {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 60;
+  background: rgba(10, 10, 15, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 60, 60, 0.4);
+  box-shadow: 0 0 15px rgba(255, 40, 40, 0.2);
+  padding: 0.65rem 1.4rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+#skip-btn:hover {
+  background: rgba(220, 30, 30, 0.8);
+  border-color: rgba(255, 100, 100, 0.8);
+  box-shadow: 0 0 25px rgba(255, 40, 40, 0.6);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   2. Interactive Main Stage
+   ========================================================= */
+#portfolio-content {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end; /* Anchors character to bottom edge */
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#portfolio-content.visible {
+  opacity: 1;
+}
+
+.character-orbit-stage {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 90vh; /* Taller stage for foreground immersion */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* =========================================================
+   3. Close-Up Avatar (Dominant Foreground Presence)
+   ========================================================= */
+.avatar-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(110%);
+  z-index: 10; /* Sits between gem front swing (z: 20) and back swing (z: 5) */
+  pointer-events: auto;
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+
+#portfolio-content.visible .avatar-wrapper {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+#hero-avatar {
+  /* Scaled up to 78% of viewport height for an imposing close-up look */
+  height: 78vh;
+  max-height: 740px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+
+  /* Enhanced crimson backlight to separate the dark silhouette from the night ocean */
+  filter: drop-shadow(0 0 50px rgba(230, 30, 30, 0.65))
+          drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95));
+}
+
+/* =========================================================
+   4. Enlarged 3D Revolving Gems
+   ========================================================= */
+.gem-link {
+  position: absolute;
+  top: 42%; /* Positioned level with the chest/hoodie collar */
+  left: 50%;
+  margin-top: -65px; /* Exact half of 130px */
+  margin-left: -65px;
+  width: 130px;      /* Increased from 90px */
+  height: 130px;
+  pointer-events: auto;
+  text-decoration: none;
+  cursor: pointer;
+  animation: orbit3D 9s linear infinite;
+  animation-play-state: paused;
+}
+
+#portfolio-content.visible .gem-link {
+  animation-play-state: running;
+}
+
+/* 3-Gem equal 120° phase offset */
+.gem-1 { animation-delay: 0s; }
+.gem-2 { animation-delay: -3s; }
+.gem-3 { animation-delay: -6s; }
+
+/* Pause on hover so the larger gems are easy to target and click */
+.character-orbit-stage:hover .gem-link {
+  animation-play-state: paused;
+}
+
+.gem-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gem-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.55));
+  transition: filter 0.3s ease;
+  animation: floatLevitate 3s ease-in-out infinite alternate;
+}
+
+/* Hover boost */
+.gem-link:hover .gem-content {
+  transform: scale(1.22);
+}
+
+.gem-link:hover .gem-image {
+  filter: drop-shadow(0 0 35px rgba(255, 255, 255, 0.95))
+          drop-shadow(0 0 55px rgba(255, 50, 50, 0.85));
+}
+
+/* Tooltip Labels */
+.gem-tooltip {
+  position: absolute;
+  bottom: -32px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(10, 10, 18, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+.gem-link:hover .gem-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   5. Keyframe Animations & Wide Orbital Path
+   ========================================================= */
+
+/*
+  Expanded 3D Orbit:
+  - Semi-major axis (X): 340px (clears the wider close-up avatar shoulders)
+  - Semi-minor axis (Y): 85px (depth angle)
+  - Front scale peak: 1.25 (swells to ~162px in front of the screen)
+  - Rear scale valley: 0.78 (recedes behind the character silhouette)
+*/
+@keyframes orbit3D {
+  0% {
+    transform: translate(340px, 0px) scale(1);
+    z-index: 20;
+  }
+  25% {
+    transform: translate(0px, 85px) scale(1.25);
+    z-index: 20;
+  }
+  49.9% {
+    z-index: 20;
+  }
+  50% {
+    transform: translate(-340px, 0px) scale(1);
+    z-index: 5;
+  }
+  75% {
+    transform: translate(0px, -85px) scale(0.78);
+    z-index: 5;
+  }
+  99.9% {
+    z-index: 5;
+  }
+  100% {
+    transform: translate(340px, 0px) scale(1);
+    z-index: 20;
+  }
+}
+
+@keyframes floatLevitate {
+  from { transform: translateY(-6px); }
+  to { transform: translateY(6px); }
+}
+
+/* Responsive adjustment for laptop/tablet screens */
+@media (max-width: 900px) {
+  #hero-avatar {
+    height: 68vh;
+    max-height: 580px;
+  }
+
+  .gem-link {
+    width: 105px;
+    height: 105px;
+    margin-top: -52px;
+    margin-left: -52px;
+  }
+
+  @keyframes orbit3D {
+    0% { transform: translate(250px, 0px) scale(1); z-index: 20; }
+    25% { transform: translate(0px, 65px) scale(1.2); z-index: 20; }
+    49.9% { z-index: 20; }
+    50% { transform: translate(-250px, 0px) scale(1); z-index: 5; }
+    75% { transform: translate(0px, -65px) scale(0.8); z-index: 5; }
+    99.9% { z-index: 5; }
+    100% { transform: translate(250px, 0px) scale(1); z-index: 20; }
+  }
+}

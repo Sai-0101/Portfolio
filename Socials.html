@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sai Gajmal | Social Connect Hub</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts: Outfit & Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              linkedin: '#0A66C2',
+              instagram: '#E1306C',
+              youtube: '#FF0000',
+              discord: '#5865F2',
+              twitch: '#9146FF',
+              accent: '#38BDF8'
+            }
+          },
+          animation: {
+            'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+            'float-slow': 'floating 4s ease-in-out infinite',
+          },
+          keyframes: {
+            glowPulse: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.05)' },
+            },
+            floating: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Glassmorphism token */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Platform accent glows on hover */
+    .hover-glow-linkedin:hover {
+      box-shadow: 0 10px 30px -8px rgba(10, 102, 194, 0.35);
+      border-color: rgba(10, 102, 194, 0.5);
+    }
+    .hover-glow-instagram:hover {
+      box-shadow: 0 10px 30px -8px rgba(225, 48, 108, 0.35);
+      border-color: rgba(225, 48, 108, 0.5);
+    }
+    .hover-glow-youtube:hover {
+      box-shadow: 0 10px 30px -8px rgba(255, 0, 0, 0.35);
+      border-color: rgba(255, 0, 0, 0.5);
+    }
+    .hover-glow-discord:hover {
+      box-shadow: 0 10px 30px -8px rgba(88, 101, 242, 0.35);
+      border-color: rgba(88, 101, 242, 0.5);
+    }
+    .hover-glow-twitch:hover {
+      box-shadow: 0 10px 30px -8px rgba(145, 70, 255, 0.35);
+      border-color: rgba(145, 70, 255, 0.5);
+    }
+
+    /* Ambient background gradient meshes */
+    .bg-cyber-radial {
+      background-image:
+        radial-gradient(at 15% 15%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+        radial-gradient(at 85% 20%, rgba(145, 70, 255, 0.18) 0px, transparent 50%),
+        radial-gradient(at 50% 90%, rgba(225, 48, 108, 0.15) 0px, transparent 55%),
+        radial-gradient(at 80% 80%, rgba(88, 101, 242, 0.15) 0px, transparent 50%);
+    }
+
+    /* Micro dot grid */
+    .dot-grid {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen relative font-sans antialiased selection:bg-cyan-500 selection:text-slate-950 overflow-x-hidden">
+
+  <!-- Ambient Background Grids & Orbs -->
+  <div class="fixed inset-0 bg-cyber-radial pointer-events-none -z-20"></div>
+  <div class="fixed inset-0 dot-grid opacity-40 pointer-events-none -z-10"></div>
+
+  <!-- Subtle glowing blobs -->
+  <div class="fixed top-12 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-cyan-500/10 rounded-full blur-[110px] pointer-events-none -z-10 animate-glow-pulse"></div>
+
+  <!-- ========================================================= -->
+  <!-- TOAST NOTIFICATION                                        -->
+  <!-- ========================================================= -->
+  <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 pointer-events-none px-4 py-3 rounded-2xl glass-card border border-cyan-500/40 shadow-2xl flex items-center gap-3 min-w-[280px] max-w-sm">
+    <div id="toastIcon" class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center flex-shrink-0 text-sm">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <div class="flex-1">
+      <h4 id="toastTitle" class="text-xs font-bold text-white uppercase tracking-wider">Copied to Clipboard</h4>
+      <p id="toastMessage" class="text-xs text-slate-300">Handle copied successfully.</p>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- QR CODE MODAL POPUP                                       -->
+  <!-- ========================================================= -->
+  <div id="qrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 transition-all opacity-0">
+    <div class="glass-card max-w-xs w-full rounded-3xl p-6 border border-slate-700/80 shadow-2xl relative flex flex-col items-center text-center transform scale-95 transition-transform duration-200">
+      <!-- Close Button -->
+      <button onclick="toggleQRModal(false)" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Modal Badge -->
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-violet-600 p-0.5 mb-3 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+        <div class="w-full h-full bg-slate-950 rounded-2xl flex items-center justify-center text-cyan-400 text-lg">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+      </div>
+
+      <h3 class="text-lg font-bold text-white mb-1">Scan to Connect</h3>
+      <p class="text-xs text-slate-400 mb-5">Point your camera to instantly open Sai Gajmal's social link hub.</p>
+
+      <!-- High-Res Dynamic QR Visual -->
+      <div class="p-3 bg-white rounded-2xl shadow-xl mb-5 flex items-center justify-center">
+        <!-- Generates clean QR using reliable dynamic QR API -->
+        <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://saigajmal.dev&color=090d16&bgcolor=ffffff&margin=1" alt="Sai Gajmal Social Hub QR Code" class="w-44 h-44 rounded-lg object-contain">
+      </div>
+
+      <button onclick="copyCurrentUrl()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600/80 text-xs font-mono font-medium text-slate-200 flex items-center justify-center gap-2 transition">
+        <i class="fa-solid fa-link text-cyan-400"></i>
+        <span>Copy Hub Web Link</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MAIN CONTAINER (Link-In-Bio Style)                        -->
+  <!-- ========================================================= -->
+  <main class="max-w-xl mx-auto px-4 py-12 sm:py-16 flex flex-col items-center">
+
+    <!-- Top Floating Toolbar -->
+    <header class="w-full flex items-center justify-between mb-8">
+      <div class="flex items-center gap-2">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+        </span>
+        <span class="text-xs font-mono text-slate-400 uppercase tracking-widest font-semibold">Active &bull; Mumbai, IN</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- QR Code Share Button -->
+        <button onclick="toggleQRModal(true)" class="p-2.5 rounded-xl glass-card hover:bg-slate-800/80 text-slate-300 hover:text-cyan-400 text-xs flex items-center gap-1.5 transition" title="Show QR Code">
+          <i class="fa-solid fa-qrcode text-sm"></i>
+          <span class="hidden sm:inline font-mono text-[11px]">QR Code</span>
+        </button>
+
+        <!-- Share Page Button -->
+        <button onclick="shareProfile()" class="p-2.5 rounded-xl glass-card hover:bg-slate-800/80 text-slate-300 hover:text-white text-xs flex items-center gap-1.5 transition" title="Share Hub Link">
+          <i class="fa-solid fa-share-nodes text-sm text-cyan-400"></i>
+          <span class="hidden sm:inline font-mono text-[11px]">Share</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ======================================================= -->
+    <!-- PROFILE HEADER SECTION                                  -->
+    <!-- ======================================================= -->
+    <div class="flex flex-col items-center text-center mb-8">
+
+      <!-- Avatar with Animated Gradient Ring -->
+      <div class="relative mb-5 group cursor-pointer" onclick="triggerEasterEgg()">
+        <!-- Outer Glowing Rings -->
+        <div class="absolute -inset-1.5 rounded-full bg-gradient-to-r from-cyan-500 via-violet-500 to-pink-500 opacity-75 blur-md group-hover:opacity-100 transition-opacity animate-glow-pulse"></div>
+
+        <!-- Inner Border & Avatar container -->
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-slate-950 flex items-center justify-center">
+          <div class="w-full h-full rounded-full bg-gradient-to-tr from-slate-900 via-slate-800 to-slate-950 flex flex-col items-center justify-center border border-white/10 shadow-2xl relative overflow-hidden">
+            <!-- Initials Monogram & Gamer Silhouette -->
+            <span class="text-3xl sm:text-4xl font-black tracking-tight bg-gradient-to-br from-cyan-400 via-sky-200 to-violet-400 bg-clip-text text-transparent select-none">
+              SG
+            </span>
+            <span class="text-[9px] font-mono tracking-widest text-cyan-400/80 uppercase font-semibold mt-0.5">radiance</span>
+            <!-- Cyber Scanline in Avatar -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/5 to-transparent pointer-events-none"></div>
+          </div>
+
+          <!-- Esports Controller Badge -->
+          <div class="absolute bottom-1 right-1 w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 border-2 border-slate-950 flex items-center justify-center text-slate-950 text-xs shadow-lg" title="Esports Competitor">
+            <i class="fa-solid fa-gamepad"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Name & Verified Badge -->
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          Sai Gajmal
+        </h1>
+        <div class="w-5 h-5 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center text-[10px] shadow-sm shadow-cyan-500/50" title="Verified Creator & Developer">
+          <i class="fa-solid fa-check"></i>
+        </div>
+      </div>
+
+      <!-- Handle / Tagline -->
+      <p class="text-xs font-mono text-cyan-400 font-medium mb-3">
+        @saigajmal &bull; Team Radiance
+      </p>
+
+      <!-- Bio / Description -->
+      <p class="text-xs sm:text-sm text-slate-300 max-w-md leading-relaxed mb-5">
+        Computer Engineering Student &bull; Game Developer &bull; Competitive Esports Player. Building interactive systems and streaming the journey.
+      </p>
+
+      <!-- Live Twitch Status Pill -->
+      <a href="https://twitch.tv" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-purple-500/40 text-purple-300 hover:text-white text-xs font-mono transition group mb-4">
+        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+        <span class="font-bold">Twitch Status:</span>
+        <span class="text-slate-300 group-hover:text-purple-300">Live Scrims &amp; Dev Vods</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-purple-400 ml-1"></i>
+      </a>
+
+      <!-- Search & Quick Category Filters -->
+      <div class="w-full flex items-center gap-2 mb-2">
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <input type="text" id="socialSearch" oninput="filterSocials()" placeholder="Search platforms (e.g. video, code, gaming)..." class="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/60 transition">
+        </div>
+        <button onclick="resetFilters()" class="px-3 py-2 rounded-xl glass-card text-xs font-mono text-slate-400 hover:text-white transition" title="Show All">
+          Reset
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- SOCIAL PLATFORMS LIST (5 PLATFORMS)                     -->
+    <!-- ======================================================= -->
+    <div id="socialList" class="w-full space-y-3.5 mb-10">
+
+      <!-- 1. LINKEDIN CARD -->
+      <div class="social-item glass-card hover-glow-linkedin rounded-2xl p-4 sm:p-5 flex flex-col gap-3 group relative" data-keywords="linkedin professional career engineering projects tech resume">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <!-- Icon Container -->
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-600 to-blue-700 flex items-center justify-center text-white text-xl shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-bold text-white group-hover:text-sky-400 transition">LinkedIn</h2>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 border border-blue-800/40 text-sky-400">Professional</span>
+              </div>
+              <p class="text-xs font-mono text-slate-400">linkedin.com/in/sai-gajmal</p>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex items-center gap-1.5">
+            <button onclick="copyToClipboard('https://linkedin.com/in/sai-gajmal', 'LinkedIn URL')" class="w-9 h-9 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-xs transition border border-slate-800" title="Copy LinkedIn Profile Link">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md shadow-blue-600/30 transition transform group-hover:translate-x-0.5">
+              <span>Connect</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Description snippet -->
+        <p class="text-xs text-slate-300/90 leading-relaxed border-t border-slate-800/80 pt-2.5">
+          Engineering portfolio updates, 2026 hackathon announcements, systems engineering discussions, and academic milestones.
+        </p>
+      </div>
+
+      <!-- 2. INSTAGRAM CARD -->
+      <div class="social-item glass-card hover-glow-instagram rounded-2xl p-4 sm:p-5 flex flex-col gap-3 group relative" data-keywords="instagram photos reels lifestyle campus daily art visual">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <!-- Gradient Icon Container -->
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white text-xl shadow-md shadow-rose-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+              <i class="fa-brands fa-instagram"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-bold text-white group-hover:text-rose-400 transition">Instagram</h2>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950/80 border border-rose-800/40 text-rose-300">Visual Feed</span>
+              </div>
+              <p class="text-xs font-mono text-slate-400">@saga_010108</p>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex items-center gap-1.5">
+            <button onclick="copyToClipboard('@saga_010108', 'Instagram Handle')" class="w-9 h-9 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-xs transition border border-slate-800" title="Copy Instagram Handle">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-400 hover:to-purple-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md shadow-rose-600/30 transition transform group-hover:translate-x-0.5">
+              <span>Follow</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-300/90 leading-relaxed border-t border-slate-800/80 pt-2.5">
+          Campus life at college, setup aesthetics, tournament behind-the-scenes, travel memories, and creative photography.
+        </p>
+      </div>
+
+      <!-- 3. YOUTUBE CARD -->
+      <div class="social-item glass-card hover-glow-youtube rounded-2xl p-4 sm:p-5 flex flex-col gap-3 group relative" data-keywords="youtube videos devlogs tutorials highlights vods gaming gameplay">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-red-600 to-rose-700 flex items-center justify-center text-white text-xl shadow-md shadow-red-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+              <i class="fa-brands fa-youtube"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-bold text-white group-hover:text-red-400 transition">YouTube</h2>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-red-950/80 border border-red-800/40 text-red-300">Devlogs &amp; Gaming</span>
+              </div>
+              <p class="text-xs font-mono text-slate-400">@dracdarer</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button onclick="copyToClipboard('https://youtube.com/@dracdarer?si=jQGL4kopWPX99oQs', 'YouTube Link')" class="w-9 h-9 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-xs transition border border-slate-800" title="Copy YouTube Link">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md shadow-red-600/30 transition transform group-hover:translate-x-0.5">
+              <span>Subscribe</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-300/90 leading-relaxed border-t border-slate-800/80 pt-2.5">
+          Competitive match VOD breakdowns, Unity development diaries, low-latency C++ coding tutorials, and gameplay frag movies.
+        </p>
+      </div>
+
+      <!-- 4. DISCORD CARD -->
+      <div class="social-item glass-card hover-glow-discord rounded-2xl p-4 sm:p-5 flex flex-col gap-3 group relative" data-keywords="discord community voice chat scrims server tag gaming message">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-[#5865F2] flex items-center justify-center text-white text-xl shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+              <i class="fa-brands fa-discord"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-bold text-white group-hover:text-indigo-400 transition">Discord</h2>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950/80 border border-indigo-800/40 text-indigo-300">Community &amp; Voice</span>
+              </div>
+              <p class="text-xs font-mono text-slate-400">Username: <span class="text-indigo-300 font-bold select-all">Dracdarer</span></p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button onclick="copyToClipboard('dracdarer01_13173', 'Discord Username')" class="px-3 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 hover:text-white text-xs font-mono flex items-center gap-1.5 transition" title="Click to copy Discord Tag">
+              <i class="fa-regular fa-copy"></i>
+              <span class="hidden sm:inline">Copy Tag</span>
+            </button>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-[#5865F2] hover:bg-indigo-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md shadow-indigo-600/30 transition transform group-hover:translate-x-0.5">
+              <span>Join Server</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-300/90 leading-relaxed border-t border-slate-800/80 pt-2.5">
+          Hop into our Discord server for tournament scrim lobbies, open-source co-working voice channels, and general gaming banter.
+        </p>
+      </div>
+
+      <!-- 5. TWITCH CARD -->
+      <div class="social-item glass-card hover-glow-twitch rounded-2xl p-4 sm:p-5 flex flex-col gap-3 group relative" data-keywords="twitch stream live broadcasting gaming esports valorant broadcast">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-600 to-violet-700 flex items-center justify-center text-white text-xl shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+              <i class="fa-brands fa-twitch"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-base font-bold text-white group-hover:text-purple-400 transition">Twitch</h2>
+                <!-- Live indicator -->
+                <span class="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950/80 border border-purple-800/40 text-purple-300">
+                  <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse"></span> Streamer
+                </span>
+              </div>
+              <p class="text-xs font-mono text-slate-400">twitch.tv/dracdarer</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button onclick="copyToClipboard('https://twitch.tv/dracdarer', 'Twitch Stream URL')" class="w-9 h-9 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center text-xs transition border border-slate-800" title="Copy Twitch Channel URL">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <a href="https://twitch.tv" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-[#9146FF] hover:bg-purple-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md shadow-purple-600/30 transition transform group-hover:translate-x-0.5">
+              <span>Watch Live</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-300/90 leading-relaxed border-t border-slate-800/80 pt-2.5">
+          Live weekend broadcasts featuring competitive ranked games (Valorant), indie game playtesting, and late-night coding sessions.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Empty State for Search -->
+    <div id="noResults" class="hidden text-center py-10 w-full glass-card rounded-2xl mb-8">
+      <i class="fa-solid fa-ghost text-3xl text-slate-500 mb-2"></i>
+      <h3 class="text-sm font-semibold text-slate-300">No platforms found</h3>
+      <p class="text-xs text-slate-500">Try searching "code", "videos", "stream", or "chat".</p>
+    </div>
+
+    <!-- Direct Contact Pill / Email Backup -->
+    <div class="w-full glass-card rounded-2xl p-4 flex items-center justify-between border border-slate-800/80 mb-10">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm border border-cyan-500/20">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-white">Direct Business Inquiries</h4>
+          <p class="text-[11px] font-mono text-slate-400">saisanikasandip@gmail.com</p>
+        </div>
+      </div>
+      <button onclick="copyToClipboard('saisanikasandip@gmail.com', 'Email Address')" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs font-mono text-cyan-400 border border-slate-700/80 transition flex items-center gap-1.5">
+        <i class="fa-regular fa-copy text-[10px]"></i>
+        <span>Copy Email</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-slate-500 font-mono flex flex-col items-center gap-2">
+      <div class="flex items-center gap-3">
+        <a href="#" onclick="copyCurrentUrl(); return false;" class="hover:text-cyan-400 transition">Copy Profile Hub</a>
+        <span>&bull;</span>
+        <button onclick="toggleQRModal(true)" class="hover:text-cyan-400 transition">Get QR Code</button>
+      </div>
+      <p>&copy; 2026 Sai Gajmal &bull; All Rights Reserved</p>
+    </footer>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT: LOGIC & CLIPBOARD                             -->
+  <!-- ========================================================= -->
+  <script>
+    /* =========================================================
+       1. SYNTHETIC AUDIO FEEDBACK (Web Audio API)
+       ========================================================= */
+    let audioCtx = null;
+    function playBeep(freq = 600, type = 'sine', duration = 0.08, vol = 0.08) {
+      try {
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtxClass) return;
+        if (!audioCtx) audioCtx = new AudioCtxClass();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        // Audio suspended or blocked by user gesture policy
+      }
+    }
+
+    /* =========================================================
+       2. CLIPBOARD COPY ENGINE (Mandatory fallback mechanism)
+       ========================================================= */
+    function copyToClipboard(text, label = 'Content') {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      textarea.style.pointerEvents = 'none';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      let successful = false;
+      try {
+        successful = document.execCommand('copy');
+      } catch (err) {
+        successful = false;
+      }
+      document.body.removeChild(textarea);
+
+      if (successful) {
+        playBeep(880, 'triangle', 0.09, 0.1);
+        showToast('Copied to Clipboard!', `${label}: "${text}"`);
+      } else {
+        // Fallback prompt message
+        showToast('Notice', `Please copy manually: ${text}`);
+      }
+    }
+
+    function copyCurrentUrl() {
+      copyToClipboard(window.location.href, 'Social Hub Web Link');
+    }
+
+    /* =========================================================
+       3. TOAST NOTIFICATION ENGINE
+       ========================================================= */
+    let toastTimeout = null;
+    function showToast(title, message) {
+      const toast = document.getElementById('toast');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastMessage = document.getElementById('toastMessage');
+
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+
+      toast.classList.remove('-translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('-translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+
+    /* =========================================================
+       4. QR CODE MODAL LOGIC
+       ========================================================= */
+    function toggleQRModal(show) {
+      const modal = document.getElementById('qrModal');
+      const modalInner = modal.querySelector('div');
+
+      if (show) {
+        playBeep(640, 'sine', 0.06, 0.05);
+        modal.classList.remove('hidden');
+        // Force reflow
+        void modal.offsetWidth;
+        modal.classList.remove('opacity-0');
+        modal.classList.add('flex', 'opacity-100');
+        modalInner.classList.remove('scale-95');
+        modalInner.classList.add('scale-100');
+      } else {
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        modalInner.classList.remove('scale-100');
+        modalInner.classList.add('scale-95');
+        setTimeout(() => {
+          modal.classList.remove('flex');
+          modal.classList.add('hidden');
+        }, 200);
+      }
+    }
+
+    // Close modal on escape or background click
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleQRModal(false);
+    });
+    document.getElementById('qrModal').addEventListener('click', (e) => {
+      if (e.target.id === 'qrModal') toggleQRModal(false);
+    });
+
+    /* =========================================================
+       5. NATIVE SHARE OR CLIPBOARD FALLBACK
+       ========================================================= */
+    function shareProfile() {
+      playBeep(750, 'sine', 0.06, 0.07);
+      if (navigator.share) {
+        navigator.share({
+          title: 'Sai Gajmal - Social Connect Hub',
+          text: 'Connect with Sai Gajmal across LinkedIn, Instagram, YouTube, Discord, and Twitch!',
+          url: window.location.href,
+        }).catch(() => {
+          copyCurrentUrl();
+        });
+      } else {
+        copyCurrentUrl();
+      }
+    }
+
+    /* =========================================================
+       6. LIVE SEARCH / KEYWORD FILTER
+       ========================================================= */
+    function filterSocials() {
+      const query = document.getElementById('socialSearch').value.toLowerCase().trim();
+      const items = document.querySelectorAll('.social-item');
+      let matches = 0;
+
+      items.forEach(item => {
+        const keywords = item.getAttribute('data-keywords') || '';
+        const title = item.querySelector('h2').textContent.toLowerCase();
+        const snippet = item.querySelector('p').textContent.toLowerCase();
+
+        if (!query || keywords.includes(query) || title.includes(query) || snippet.includes(query)) {
+          item.style.display = 'flex';
+          matches++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      const noResults = document.getElementById('noResults');
+      if (matches === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById('socialSearch').value = '';
+      filterSocials();
+      playBeep(450, 'sine', 0.05, 0.04);
+    }
+
+    /* Easter egg chime on avatar click */
+    function triggerEasterEgg() {
+      playBeep(523.25, 'triangle', 0.1, 0.1);
+      setTimeout(() => playBeep(659.25, 'triangle', 0.1, 0.1), 100);
+      setTimeout(() => playBeep(783.99, 'triangle', 0.15, 0.1), 200);
+      showToast('Team Radiance', 'Ready for the next match & deployment!');
+    }
+  </script>
+
+</body>
+</html>
