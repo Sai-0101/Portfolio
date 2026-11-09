@@ -50,7 +50,7 @@ Dedicated interactive timeline and cards highlighting competitive builds and nat
 | **Frontend Framework & Logic** | HTML5, JavaScript (ES6+), Modern DOM API |
 | **Styling & Effects** | Tailwind CSS, Custom Canvas Shaders, CSS Glassmorphism |
 | **3D Rendering & Animations** | Three.js / WebGL, CSS Keyframe Interpolation |
-| **Hosting & Deployment** | Netlify (Continuous Deployment via Git) |
+| **Hosting & Deployment** | Netlify |
 
 ---
 
