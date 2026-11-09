@@ -54,22 +54,4 @@ Dedicated interactive timeline and cards highlighting competitive builds and nat
 
 ---
 
-## 📁 Repository Structure
 
-```text
-├── assets/
-│   ├── images/              # Avatars, blood-moon masks, gem icons
-│   ├── media/               # Ambient looping background video & SFX
-│   └── icons/               # SVG tech delegate emblems
-├── css/
-│   ├── tailwind.css         # Tailwind build output
-│   └── animations.css       # Orbit transforms, glow shaders, terminal scanlines
-├── js/
-│   ├── main.js              # Application lifecycle & state manager
-│   ├── terminal.js          # Bootloader typing & diagnostic logic
-│   ├── orbit.js             # Orbiting gem physics & pointer calculations
-│   └── roundtable.js        # 3D interactive delegate roundtable scene
-├── index.html               # Main viewport & semantic layout
-├── netlify.toml             # Build configurations & header redirect rules
-├── LICENSE
-└── README.md
