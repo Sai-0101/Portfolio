@@ -1,6 +1,6 @@
 # 🌌 Sai Gajmal | Interactive Developer Portfolio
 
-[![Live Site](https://img.shields.io/badge/Netlify-sai--0101.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://sai-0101.netlify.app)
+[![Live Site](https://img.shields.io/badge/Netlify-sai--0101.netlify.app-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://sai-gajmal-portfolio.netlify.app)
 [![Tech Stack](https://img.shields.io/badge/Stack-Three.js_|_TailwindCSS_|_JS-blue?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![GitHub](https://img.shields.io/badge/GitHub-Sai--0101-181717?style=for-the-badge&logo=github)](https://github.com/Sai-0101)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
