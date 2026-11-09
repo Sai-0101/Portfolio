@@ -7,7 +7,7 @@
 
 > A dark, cinematic personal portfolio combining an interactive terminal boot sequence, celestial blood-moon aesthetics, 3D interactive roundtables, and gamified navigation nodes to showcase competitive hackathon builds, systems engineering projects, and software design.
 
-🔗 **Live Deployment:** [sai-0101.netlify.app](https://sai-0101.netlify.app)
+🔗 **Live Deployment:** [sai-0101.netlify.app](https://sai-gajmal-portfolio.netlify.app)
 
 ---
 
